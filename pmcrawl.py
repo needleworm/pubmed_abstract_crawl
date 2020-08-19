@@ -17,7 +17,7 @@ def crawl_abstract(keyword, outfile=None, max_iter=1000):
     if not outfile:
         outfile = "[Crawling Results]" + keyword + ".csv"
 
-    o_file = open(outfile, 'w')
+    o_file = open(outfile, 'w', encoding="utf8")
 
     header = "PMID, Authors, Year, Title, Abstract, URL, Citation\n"
     o_file.write(header)
