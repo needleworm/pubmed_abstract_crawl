@@ -19,7 +19,7 @@ def crawl_abstract(keyword, outfile=None, max_iter=1000):
 
     o_file = open(outfile, 'w', encoding="utf8")
 
-    header = "PMID, Authors, Year, Title, Abstract, URL, Citation\n"
+    header = "PMID, Authors, Year, Title, Abstract, URL, Citation, Chemicals\n"
     o_file.write(header)
 
     for pmid in pmids:
@@ -37,6 +37,11 @@ def crawl_abstract(keyword, outfile=None, max_iter=1000):
         if not url: continue
         citation = article.citation
         if not citation: continue
+        chemical = article.chemicals
+        if not chemical:
+            chemical = "None"
+        else:
+            chemical =str(chemical)
 
         print(article.citation)
 
@@ -46,7 +51,8 @@ def crawl_abstract(keyword, outfile=None, max_iter=1000):
         o_file.write(title + ", ")
         o_file.write(abstract + ", ")
         o_file.write(url + ", ")
-        o_file.write(citation + "\n")
+        o_file.write(citation + ",")
+        o_file.write(chemical + "\n")
 
     o_file.close()
     print("Process Done!")
