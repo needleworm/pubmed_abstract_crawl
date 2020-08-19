@@ -41,7 +41,14 @@ def crawl_abstract(keyword, outfile=None, max_iter=1000):
         if not chemical:
             chemical = "None"
         else:
-            chemical =str(chemical)
+            return article
+            chemical = ""
+            tmp = str(chemical)
+            for el in tmp:
+                if el != ",":
+                    chemical += el
+                else:
+                    chemical += "&"
 
         print(article.citation)
 
