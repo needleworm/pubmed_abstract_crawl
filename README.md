@@ -1,5 +1,5 @@
 # pubmed_abstract_crawl
-Crawling PubMed Papers' Abstracts
+Crawling PubMed Papers' Abstracts and Chemicals.
 
 ## Usage
 > import pmcrawl as P
