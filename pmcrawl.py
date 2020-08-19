@@ -8,6 +8,16 @@ https://github.com/needleworm
 from metapub import PubMedFetcher
 
 
+def remove_escape(string):
+    retval = ""
+    for el in string:
+        if el not in "\n\t":
+            retval += el
+        else:
+            retval += " "
+    return retval
+
+
 def crawl_abstract(keyword, outfile=None, max_iter=1000):
     fetch = PubMedFetcher()
 
@@ -19,46 +29,67 @@ def crawl_abstract(keyword, outfile=None, max_iter=1000):
 
     o_file = open(outfile, 'w', encoding="utf8")
 
-    header = "PMID, Authors, Year, Title, Abstract, URL, Citation, Chemicals\n"
+    header = "PMID\tAuthors\tYear\tTitle\tAbstract\tURL\tCitation\tChemicals\n"
     o_file.write(header)
 
     for pmid in pmids:
         article = fetch.article_by_pmid(pmid)
-        if not article: continue
+        if not article:
+            continue
+
         authors = article.authors_str
-        if not authors: continue
+        if not authors:
+            continue
+        elif "\t" in authors or "\n" in authors:
+            authors = remove_escape(authors)
+
         year = article.year
-        if not year: continue
+        if not year:
+            continue
+        elif "\t" in year or "\n" in year:
+            year = remove_escape(year)
+
         title = article.title
-        if not title: continue
+        if not title:
+            continue
+        elif "\t" in title or "\n" in title:
+            title = remove_escape(title)
+
         abstract = article.abstract
-        if not abstract: continue
+        if not abstract:
+            continue
+        elif "\t" in abstract or "\n" in abstract:
+            abstract = remove_escape(abstract)
+
         url = article.url
-        if not url: continue
+        if not url:
+            continue
+        elif "\t" in url or "\n" in url:
+            url = remove_escape(url)
+
         citation = article.citation
-        if not citation: continue
+        if not citation:
+            continue
+        elif "\t" in citation or "\n" in citation:
+            citation = remove_escape(citation)
+
         chemical = article.chemicals
         if not chemical:
             chemical = "None"
         else:
-            return article
-            chemical = ""
-            tmp = str(chemical)
-            for el in tmp:
-                if el != ",":
-                    chemical += el
-                else:
-                    chemical += "&"
+            chemical = str(chemical)
+            if "\t" in chemical or "\n" in chemical:
+                chemical = remove_escape(chemical)
 
-        print(article.citation)
+        print(article.citation + "\n")
 
-        o_file.write(pmid + ", ")
-        o_file.write(authors + ", ")
-        o_file.write(year + ", ")
-        o_file.write(title + ", ")
-        o_file.write(abstract + ", ")
-        o_file.write(url + ", ")
-        o_file.write(citation + ",")
+        o_file.write(pmid + "\t")
+        o_file.write(authors + "\t")
+        o_file.write(year + "\t")
+        o_file.write(title + "\t")
+        o_file.write(abstract + "\t")
+        o_file.write(url + "\t")
+        o_file.write(citation + "\t")
         o_file.write(chemical + "\n")
 
     o_file.close()
