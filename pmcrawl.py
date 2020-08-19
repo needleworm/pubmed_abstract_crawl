@@ -24,12 +24,19 @@ def crawl_abstract(keyword, outfile=None, max_iter=1000):
 
     for pmid in pmids:
         article = fetch.article_by_pmid(pmid)
+        if not article: continue
         authors = article.authors_str
+        if not authors: continue
         year = article.year
+        if not year: continue
         title = article.title
+        if not title: continue
         abstract = article.abstract
+        if not abstract: continue
         url = article.url
+        if not url: continue
         citation = article.citation
+        if not citation: continue
 
         print(article.citation)
 
