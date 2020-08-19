@@ -25,7 +25,7 @@ def crawl_abstract(keyword, outfile=None, max_iter=1000):
     print("PMID scan Done!")
 
     if not outfile:
-        outfile = "[Crawling Results]" + keyword + ".csv"
+        outfile = "[Crawling Results]" + keyword + ".tsv"
 
     o_file = open(outfile, 'w', encoding="utf8")
 

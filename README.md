@@ -7,11 +7,11 @@ Crawling PubMed Papers' Abstracts and Chemicals.
 >P.crawl_abstract(keyword, outfile=None, max_iter=1000)
 >
 outfile is the name of output file. Default is \<\[Crawling Results]_<keyword>.csv>. 
-You may provide customized filename including file extension. ".csv" is recommended.
+You may provide customized filename including file extension. ".tsv" is recommended.
 
 max_iter is the number of iterations.
 
-The result is tab-separated csv.
+The result is tab-separated values (.tsv).
 
 ## Requirement
 >pip install metapub
