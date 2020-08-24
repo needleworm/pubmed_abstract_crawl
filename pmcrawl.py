@@ -18,7 +18,7 @@ def remove_escape(string):
     return retval
 
 
-def crawl_abstract(keyword, outfile=None, max_iter=1000):
+def crawl_abstract(keyword, outfile=None, max_iter=1000, has_chem_only=False):
     fetch = PubMedFetcher()
 
     pmids = fetch.pmids_for_query(keyword, retmax=max_iter)
@@ -75,6 +75,8 @@ def crawl_abstract(keyword, outfile=None, max_iter=1000):
 
         chemical = article.chemicals
         if not chemical:
+            if has_chem_only:
+                continue
             chemical = "None"
         else:
             chemical = str(chemical)
