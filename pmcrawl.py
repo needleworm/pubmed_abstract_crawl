@@ -79,7 +79,7 @@ def crawl_abstract(keyword, outfile=None, max_iter=1000, has_chem_only=False):
                 continue
             chemical = "None"
         else:
-            chemical = str(chemical)
+            chemical = str(chemical).replace("\'", "\"")
             if "\t" in chemical or "\n" in chemical:
                 chemical = remove_escape(chemical)
 
@@ -97,6 +97,3 @@ def crawl_abstract(keyword, outfile=None, max_iter=1000, has_chem_only=False):
     o_file.close()
     print("Process Done!")
     print("Result is saved in <" + outfile + ">.")
-
-
-
