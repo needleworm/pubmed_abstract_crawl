@@ -18,6 +18,31 @@ def remove_escape(string):
     return retval
 
 
+def crawl_abstract_and_return_json(keyword, retmax=1000):
+    fetch = PubMedFetcher()
+
+    pmids = fetch.pmids_for_query(keyword, retmax=retmax)
+    print("PMID scan Done!")
+
+    json_dicts = []
+
+    for pmid in pmids:
+        article = fetch.article_by_pmid(pmid)
+        if not article:
+            continue
+
+        chemical = article.chemicals
+        if not chemical:
+            continue
+
+        print(str(chemical) + "\n")
+
+        json_dicts.append(chemical)
+
+    print("Process Done!")
+    return json_dicts
+
+
 def crawl_abstract(keyword, outfile=None, max_iter=1000, has_chem_only=False):
     fetch = PubMedFetcher()
 
