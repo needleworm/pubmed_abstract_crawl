@@ -4,9 +4,9 @@ Last Modification : 2020.08.19.
 halfbottle@sangsang.farm
 https://github.com/needleworm
 """
-
 from metapub import PubMedFetcher
 from tqdm import tqdm
+
 
 def remove_escape(string):
     retval = ""
@@ -25,10 +25,13 @@ def crawl_chem_json(keyword, retmax=1000):
     print("PMID scan Done!")
 
     json_dicts = []
+    print("Crawling Paper Info..")
 
     for pmid in tqdm(pmids):
-        article = fetch.article_by_pmid(pmid)
-        if not article:
+        try:
+            article = fetch.article_by_pmid(pmid)
+        except:
+            print("Error reading " + str(pmid))
             continue
 
         chemical = article.chemicals
@@ -54,6 +57,8 @@ def crawl_abstract(keyword, outfile=None, max_iter=1000, has_chem_only=False):
 
     header = "PMID\tAuthors\tYear\tTitle\tAbstract\tURL\tCitation\tChemicals\n"
     o_file.write(header)
+
+    print("Crawling Paper Info..")
 
     for pmid in tqdm(pmids):
         article = fetch.article_by_pmid(pmid)
